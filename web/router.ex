@@ -25,5 +25,6 @@ defmodule PhoenixReact.Router do
     pipe_through :api
 
     get "/repos", RepoController, :index
+    post "/repos/create", RepoController, :create
   end
 end

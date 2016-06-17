@@ -9,4 +9,8 @@ defmodule PhoenixReact.RepoController do
       %{author: "chancy", repo: "clew"}
     ]
   end
+
+  def create(conn, _) do
+    json conn, %{repos: [%{author: "a", repo: "b"}]}
+  end
 end
