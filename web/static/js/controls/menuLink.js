@@ -11,8 +11,11 @@ export default React.createClass({
   openPopup(event) {
     event.preventDefault();
     this.setState({isPopupVisible: true});
+    setTimeout(() => window.addEventListener("click", this.closePopup), 25);
   },
   closePopup(event) {
+    console.log("closing");
+    window.removeEventListener("click", this.closePopup);
     this.setState({isPopupVisible: false});
   },
   render() {

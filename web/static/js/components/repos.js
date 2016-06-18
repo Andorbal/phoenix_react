@@ -39,9 +39,6 @@ export default React.createClass({
       .catch(x => {
         console.log(x);
       });
-    //
-
-
   },
   render() {
     const repos = this.state.repos.map(repo => {
