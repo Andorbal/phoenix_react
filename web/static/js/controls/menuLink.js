@@ -14,7 +14,6 @@ export default React.createClass({
     setTimeout(() => window.addEventListener("click", this.closePopup), 25);
   },
   closePopup(event) {
-    console.log("closing");
     window.removeEventListener("click", this.closePopup);
     this.setState({isPopupVisible: false});
   },
