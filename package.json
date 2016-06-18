@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "test": "jest"
+  },
   "repository": {},
   "dependencies": {
     "babel-brunch": "^6.0.0",
@@ -14,5 +17,16 @@
     "react-dom": "^15.1.0",
     "react-router": "^2.4.1",
     "uglify-js-brunch": ">= 1.0 < 1.8"
+  },
+  "devDependencies": {
+    "babel-jest": "^12.1.0",
+    "babel-polyfill": "^6.9.1",
+    "jest-cli": "^12.1.1",
+    "react-addons-test-utils": "^15.1.0"
+  },
+  "jest": {
+    "unmockedModulePathPatterns": [
+      "./node_modules/react"
+    ]
   }
 }
