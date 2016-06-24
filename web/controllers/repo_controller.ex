@@ -1,16 +1,17 @@
 defmodule PhoenixReact.RepoController do
   use PhoenixReact.Web, :controller
+  #import PhoenixReact.Repo
 
   def index(conn, _) do
-    render conn, repos: [
-      %{author: "foo", repo: "stuff"},
-      %{author: "foo", repo: "things"},
-      %{author: "bob", repo: "claw"},
-      %{author: "chancy", repo: "clew"}
-    ]
+    repos = Repo.all from r in "repos",
+      select: %{id: r.id, author: r.author, name: r.name}
+
+    json conn, repos
   end
 
-  def create(conn, _) do
-    json conn, %{repos: [%{author: "a", repo: "b"}]}
+  def create(conn, %{"author" => author, "name" => name}) do
+    {_count, [%{id: id}]} = Repo.insert_all "repos", [[author: author, name: name]], returning: [:id]
+
+    json conn, %{repo_id: id}
   end
 end

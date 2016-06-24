@@ -4,6 +4,8 @@ import React from 'react'
 import NavLink from '../controls/navLink'
 import MenuLink from '../controls/menuLink'
 import WebRequest from '../services/webRequest'
+import RepoStore from '../stores/repoStore'
+import { getAllRepos, addRepo } from '../actions/RepoActions'
 
 export default React.createClass({
   contextTypes: {
@@ -11,40 +13,35 @@ export default React.createClass({
   },
   getInitialState() {
     return {
-      repos: []
+      repos: RepoStore.getState()
     }
   },
+  componentWillMount() {
+    getAllRepos();
+  },
   componentDidMount() {
-    WebRequest.getJson('/api/repos')
-      .then(x => this.setState({"repos": x}))
-      .catch(x => console.log(x));
+    this.storeChangeListener = RepoStore.addListener(this.onChange);
+  },
+  componentWillUnmount() {
+    this.storeChangeListener.remove();
+  },
+  onChange(data) {
+    this.setState({repos: RepoStore.getState()});
   },
   handleSubmit(event) {
     event.preventDefault();
-    const userName = event.target.elements[0].value;
-    const repo = event.target.elements[1].value;
-    const path = `/repo/${userName}/${repo}`;
+    const author = event.target.elements[0].value;
+    const name = event.target.elements[1].value;
 
-    WebRequest.post('/api/repos/create', {
-        userName: userName,
-        repo: repo
-      })
-      .then(x => {
-        console.log(x);
-        this.setState({
-          repos: this.state.repos.concat({ author: userName, repo: repo})
-        });
-        this.context.router.push(path);
-      })
-      .catch(x => {
-        console.log(x);
-      });
+    addRepo(author, name);
+
+    this.newRepoForm.closePopup();
   },
   render() {
     const repos = this.state.repos.map(repo => {
       return (
-        <li key={`${repo.author}-${repo.repo}`}>
-          <NavLink to={`/repo/${repo.author}/${repo.repo}`}>{repo.repo}</NavLink>
+        <li key={repo.id}>
+          <NavLink to={`/repo/${repo.author}/${repo.name}`}>{RepoStore.getRepoName(repo)}</NavLink>
         </li>
       )
     })
@@ -52,7 +49,7 @@ export default React.createClass({
     return (
       <div>
         <h2>Repos</h2>
-        <MenuLink text="New">
+        <MenuLink text="New" ref={c => this.newRepoForm = c}>
           <form onSubmit={this.handleSubmit}>
             <input type="text" placeholder="userName"/> / {' '}
             <input type="text" placeholder="repo"/> {' '}

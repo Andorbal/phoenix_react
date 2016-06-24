@@ -9,6 +9,7 @@
     "brunch": "^2.8",
     "clean-css-brunch": ">= 1.0 < 1.8",
     "css-brunch": ">= 1.0 < 1.8",
+    "flux": "^2.1.1",
     "javascript-brunch": ">= 1.0 < 1.8",
     "less-brunch": "^2.6.0",
     "phoenix": "file:deps/phoenix",
@@ -16,6 +17,7 @@
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-router": "^2.4.1",
+    "superagent": "^2.0.0",
     "uglify-js-brunch": ">= 1.0 < 1.8"
   },
   "devDependencies": {

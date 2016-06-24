@@ -17,10 +17,14 @@ export default React.createClass({
     window.removeEventListener("click", this.closePopup);
     this.setState({isPopupVisible: false});
   },
+  stopClickPropagation(event) {
+    event.stopPropagation(true);
+    console.log(event);
+  },
   render() {
     const popup = this.state.isPopupVisible ?
       (
-        <div>
+        <div onClick={this.stopClickPropagation}>
           <div className="menu-window">
             <div>
               {this.props.children}
