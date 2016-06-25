@@ -24,19 +24,25 @@ import "phoenix_html"
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, IndexRoute } from 'react-router'
+import { Provider } from 'react-redux'
+import { syncHistoryWithStore } from 'react-router-redux'
 import Core from './core'
 import Home from './components/home'
 import Repo from './components/repo'
 import Repos from './components/repos'
 import About from './components/about'
+import buildStore from './buildStore'
 
 import { useRouterHistory } from 'react-router'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 
 const appHistory = useRouterHistory(createBrowserHistory)({ basename: "/app" })
+const store = buildStore();
+const history = syncHistoryWithStore(appHistory, store)
 
 ReactDOM.render(
-    <Router history={appHistory}>
+  <Provider store={store}>
+    <Router history={history}>
       <Route path="/" component={Core}>
         <IndexRoute component={Home} />
 
@@ -45,6 +51,7 @@ ReactDOM.render(
         </Route>
         <Route path="/about" component={About} />
       </Route>
-    </Router>,
+    </Router>
+  </Provider>,
   document.getElementById('app')
 );
