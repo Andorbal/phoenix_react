@@ -8,13 +8,29 @@ export default React.createClass({
       isPopupVisible: false
     };
   },
+  componentWillReceiveProps: function(nextProps) {
+    if (!nextProps.canOpen) {
+      this.setState({
+        isPopupVisible: false
+      });
+    }
+  },
+  componentWillUpdate: function(nextProps, nextState) {
+    if (nextState.isPopupVisible) {
+      setTimeout(() => window.addEventListener("click", this.closePopup), 25)
+    }
+    else {
+      window.removeEventListener("click", this.closePopup)
+    }
+  },
   openPopup(event) {
     event.preventDefault();
-    this.setState({isPopupVisible: true});
-    setTimeout(() => window.addEventListener("click", this.closePopup), 25);
+
+    if (this.props.canOpen) {
+      this.setState({isPopupVisible: true});
+    }
   },
   closePopup(event) {
-    window.removeEventListener("click", this.closePopup);
     this.setState({isPopupVisible: false});
   },
   stopClickPropagation(event) {

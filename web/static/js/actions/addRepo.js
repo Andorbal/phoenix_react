@@ -19,6 +19,14 @@ function repoAdded(id, author, name) {
   }
 }
 
+export const REPO_NOT_ADDED = 'REPO_NOT_ADDED'
+function repoNotAdded(reason) {
+  return {
+    type: REPO_NOT_ADDED,
+    reason: reason
+  }
+}
+
 export default function addRepo(author, name) {
   // Thunk middleware knows how to handle functions.
   // It passes the dispatch method as an argument to the function,
@@ -33,5 +41,6 @@ export default function addRepo(author, name) {
     // This is not required by thunk middleware, but it is convenient for us.
     return RepoApi.add(author, name)
       .then(id => dispatch(repoAdded(id, author, name)))
+      .catch(ex => dispatch(repoNotAdded(ex)))
   }
 }

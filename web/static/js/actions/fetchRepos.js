@@ -15,11 +15,20 @@ function reposFetched(repos) {
   }
 }
 
+export const REPOS_NOT_FETCHED = 'REPOS_NOT_FETCHED'
+function reposNotFetched(reason) {
+  return {
+    type: REPOS_NOT_FETCHED,
+    reason: reason
+  }
+}
+
 export default function fetchRepos() {
   return function (dispatch) {
     dispatch(fetchingRepos())
 
     return RepoApi.getAll()
       .then(repos => dispatch(reposFetched(repos)))
+      .catch(ex => dispatch(reposNotFetched(ex)))
   }
 }

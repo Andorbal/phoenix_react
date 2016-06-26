@@ -9,10 +9,8 @@ const reducer = combineReducers({
   routing: routerReducer
 })
 
-console.log(middleware)
-
 const enhancer = compose(
-  applyMiddleware(...middleware, thunk),
+  applyMiddleware(middleware.logger, thunk),
   window.devToolsExtension ? window.devToolsExtension() : f => f
 )
 
