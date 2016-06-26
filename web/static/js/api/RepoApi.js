@@ -14,7 +14,7 @@ export default {
       .accept('json')
       .send({author: author, name: name})
       .then(response => {
-        return response.body;
+        return response.body.repo_id;
       });
   }
 }

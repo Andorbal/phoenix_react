@@ -32,6 +32,7 @@ import Repo from './components/repo'
 import ReposContainer from './containers/ReposContainer'
 import About from './components/about'
 import buildStore from './buildStore'
+import fetchRepos from './actions/fetchRepos'
 
 import { useRouterHistory } from 'react-router'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
@@ -55,3 +56,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app')
 );
+
+store.dispatch(fetchRepos());

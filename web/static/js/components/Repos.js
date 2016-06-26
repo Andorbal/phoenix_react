@@ -91,7 +91,7 @@ const Repos = ({ repos, children, onAddRepo }) => (
     <ul>
       {repos.map(repo =>
         <li key={repo.id}>
-          <NavLink to={`/repo/${repo.author}/${repo.name}`}>{RepoStore.getRepoName(repo)}</NavLink>
+          <NavLink to={`/repo/${repo.author}/${repo.name}`}>{`${repo.author}/${repo.name}`}</NavLink>
         </li>
       )}
     </ul>
