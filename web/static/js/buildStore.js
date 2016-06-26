@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { routerReducer } from 'react-router-redux'
+import thunk from 'redux-thunk'
 import * as middleware from './middleware'
 import * as reducers from './reducers'
 
@@ -9,7 +10,7 @@ const reducer = combineReducers({
 })
 
 const enhancer = compose(
-  applyMiddleware(...middleware),
+  applyMiddleware(...middleware, thunk),
   window.devToolsExtension ? window.devToolsExtension() : f => f
 )
 

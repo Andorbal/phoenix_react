@@ -29,7 +29,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import Core from './core'
 import Home from './components/home'
 import Repo from './components/repo'
-import Repos from './components/repos'
+import ReposContainer from './containers/ReposContainer'
 import About from './components/about'
 import buildStore from './buildStore'
 
@@ -46,7 +46,7 @@ ReactDOM.render(
       <Route path="/" component={Core}>
         <IndexRoute component={Home} />
 
-        <Route path="/repos" component={Repos}>
+        <Route path="/repos" component={ReposContainer}>
           <Route path="/repo/:userName/:repoName" component={Repo} />
         </Route>
         <Route path="/about" component={About} />
